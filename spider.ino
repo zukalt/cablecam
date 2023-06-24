@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "common.h"
 #include "PWMInput.h"
 #include "PWMButton.h"
@@ -7,8 +9,6 @@
 
 #include "SpiderModel.h"
 
-
-void (*arduinoHardReset)(void) = 0;
 
 
 RotationTracker hallSensors(PCINT0, PCINT1, PCINT2);

@@ -1,6 +1,7 @@
-#ifndef SPIDER_COMMON
-#define SPIDER_COMMON
+#ifndef SPIDER_COMMON_h
+#define SPIDER_COMMON_h
 
+void (*arduinoHardReset)(void) = 0;
 
 
 #define RESET_SECONDS 5000000
@@ -16,4 +17,4 @@
 #define bitcheck(byte, nbit) ((byte) & (1 << (nbit)))
 
 
-#endif SPIDER_COMMON
+#endif SPIDER_COMMON_h
