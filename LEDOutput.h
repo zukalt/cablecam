@@ -6,6 +6,8 @@
 
 class LEDOutput {
   const byte errorPin, pin1, pin2;
+  bool blinkMode = false;
+  unsigned long lastChange = 0;
 
 public:
   LEDOutput(byte errPin, byte led1Pin, byte led2Pin)
@@ -43,8 +45,23 @@ public:
     digitalWrite(this->pin1, HIGH);
     digitalWrite(this->pin2, HIGH);
   }
+  void setAutoPilotMode(bool on) {
+    if (on) {
+      digitalWrite(this->pin1, HIGH);
+      digitalWrite(this->pin2, LOW);
+    }
+    else {
+      this->setBothPositionsSet();
+    }
+    this->blinkMode = on;
+  }
 
   void tick(unsigned long time) {
+    if (time - this->lastChange > 500000) {
+      digitalWrite(this->pin1, !digitalRead(this->pin1));
+      digitalWrite(this->pin2, !digitalRead(this->pin2));
+      this->lastChange = time;
+    }
   }
 };
 

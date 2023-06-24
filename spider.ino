@@ -59,13 +59,14 @@ void loop() {
   const unsigned long time = micros();
 
   btn.tick(time);
-
-  const unsigned long clicked = btn.consumeClickEvent();
-  const int newSpeed = speed.currentSpeed();
+  leds.tick(time);
 
   if (IS_RESET_PRESS(btn.currentPressDuration())) {
     return arduinoHardReset(); // hard reset from
   }
+
+  const unsigned long clicked = btn.consumeClickEvent();
+  const int newSpeed = speed.currentSpeed();
 
   if (hallSensors.sensorError()) {
     leds.setError();
