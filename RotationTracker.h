@@ -2,8 +2,6 @@
 #define RotationTracker_h
 
 
-#define PIN_STATES_LENGTH 6
-
 #define P000 0B00000000
 #define P001 0B00000001
 #define P011 0B00000011
@@ -18,8 +16,6 @@
 #define P1_MASK P001
 #define P2_MASK P010
 #define P3_MASK P100
-
-
 
 
 

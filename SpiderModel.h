@@ -48,30 +48,42 @@ public:
       this->leds->setSinglePositionSet();
     }
     else if (!this->rightSet) {
-        if (abs(this->letPosition - this->currentPosition) > 12) {
+        if (abs(this->letPosition - this->currentPosition) > 0) {
           this->rightPosition = this->currentPosition;
           this->rightSet = true;
           this->leds->setBothPositionsSet();
         }
     }
-    else if (abs(this->currentSpeed) > 0) {
-      this->minSpeedSet = abs(this->currentSpeed);
+    else if (!this->minSpeedSet && abs(this->currentSpeed) > 10) {
+      this->minSpeedSet = this->currentSpeed;
+      this->leds->setAutoPilotMode(true);
     }
   }
 
+  void setCurrentSpeed(int newSpeed) {
+    this->currentSpeed = newSpeed - 1500;
 
+    this->motor->setSpeed(newSpeed);
+  }
   
 
-  void tick(unsigned long clicked, unsigned long newSpeed, int position) {
+  void tick(unsigned long clicked, int newSpeed, int position) {
     this->currentPosition = position;
+    this->setCurrentSpeed(newSpeed);
+
     if (IS_CLICK(clicked)) {
       this->changeMode();
     }
     else if (IS_LONG_PRESS(clicked)) {
-      this->reset();
+      if (this->minSpeedSet) {
+        this->minSpeedSet = 0;
+        this->leds->setAutoPilotMode(false);
+      }
+      else {
+        this->reset();
+      }
     }
 
-    this->motor->setSpeed(newSpeed);
 
   }
 };

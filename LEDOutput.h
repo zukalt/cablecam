@@ -57,6 +57,9 @@ public:
   }
 
   void tick(unsigned long time) {
+    if (!this->blinkMode){
+      return;
+    }
     if (time - this->lastChange > 500000) {
       digitalWrite(this->pin1, !digitalRead(this->pin1));
       digitalWrite(this->pin2, !digitalRead(this->pin2));
