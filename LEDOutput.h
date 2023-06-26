@@ -18,13 +18,8 @@ public:
     pinMode(this->pin1, OUTPUT);
     pinMode(this->pin2, OUTPUT);
 
-    digitalWrite(this->errorPin, HIGH);
-    digitalWrite(this->pin1, HIGH);
-    digitalWrite(this->pin2, HIGH);
-
+    this->setFatalError();
     delay(1000);
-
-
   }
 
   void setError() {
@@ -35,16 +30,27 @@ public:
     digitalWrite(this->errorPin, LOW);
     digitalWrite(this->pin1, LOW);
     digitalWrite(this->pin2, LOW);
+    this->blinkMode = false;    
+  }
+
+  void setFatalError() {
+    digitalWrite(this->errorPin, HIGH);
+    digitalWrite(this->pin1, HIGH);
+    digitalWrite(this->pin2, HIGH);
   }
 
   void setSinglePositionSet() {
     digitalWrite(this->pin1, HIGH);
     digitalWrite(this->pin2, LOW);
+    this->blinkMode = false;
   }
+
   void setBothPositionsSet() {
     digitalWrite(this->pin1, HIGH);
     digitalWrite(this->pin2, HIGH);
+    this->blinkMode = false;
   }
+
   void setAutoPilotMode(bool on) {
     if (on) {
       digitalWrite(this->pin1, HIGH);

@@ -78,10 +78,10 @@ protected:
 
     if (this->entry) {
       if ((pins == P100) && (this->entry == P011)) {
-        this->pos++;
+        this->pos--;
         this->entry = 0;
       } else if ((pins == P001) && (this->entry == P110)) {
-        this->pos--;
+        this->pos++;
         this->entry = 0;
       }
     } else {

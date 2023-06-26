@@ -65,29 +65,15 @@ void loop() {
     return arduinoHardReset(); // hard reset from
   }
 
-  const unsigned long clicked = btn.consumeClickEvent();
-  const int newSpeed = speed.currentSpeed();
+  const unsigned long clickDurationMicros = btn.consumeClickEvent();
+  const int speedInput = speed.currentSpeed();
 
   if (hallSensors.sensorError()) {
     leds.setError();
   }
 
-  model.tick(clicked, newSpeed, hallSensors.position());
+  model.tick(clickDurationMicros, speedInput, hallSensors.position());
 
-
-  // Serial.print(clicked);
-  // Serial.print(" ");
-  // Serial.print(s);
-  // Serial.print(" ");
-  Serial.print(hallSensors.position());
-  // Serial.print(" ");
-  // Serial.print(hallSensors.entry);
-  // Serial.print(" ");
-  // Serial.print(hallSensors.last);
-  Serial.print(" ");
-  Serial.print(motor.speed());
-  Serial.println();
-  delay(50);
 }
 
 
