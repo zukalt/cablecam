@@ -60,9 +60,9 @@ public:
     if (this->last != pins) {
       this->onPinChange(pins);
       this->last = pins;
-      // if (this->hasErrorState(pins)) {
-      //   this->error = 1;
-      // }
+      if (this->hasErrorState(pins)) {
+        this->error = 1;
+      }
     }
   }
 

@@ -7,7 +7,9 @@
 class LEDOutput {
   const byte errorPin, pin1, pin2;
   bool blinkMode = false;
+  byte blinkPin = 1;
   unsigned long lastChange = 0;
+
 
 public:
   LEDOutput(byte errPin, byte led1Pin, byte led2Pin)
@@ -62,13 +64,23 @@ public:
     this->blinkMode = on;
   }
 
+  void setBlinkPin(byte pin) {
+    this->blinkPin = pin;
+  }
+
   void tick(unsigned long time) {
     if (!this->blinkMode){
       return;
     }
     if (time - this->lastChange > 500000) {
-      digitalWrite(this->pin1, !digitalRead(this->pin1));
-      digitalWrite(this->pin2, !digitalRead(this->pin2));
+      if (this->blinkPin == 1) {
+        digitalWrite(this->pin1, !digitalRead(this->pin1));
+        digitalWrite(this->pin2, LOW);
+      }
+      else {
+        digitalWrite(this->pin2, !digitalRead(this->pin2));
+        digitalWrite(this->pin1, LOW);
+      }
       this->lastChange = time;
     }
   }

@@ -4,7 +4,7 @@
 void (*arduinoHardReset)(void) = 0;
 
 
-#define RESET_SECONDS 5000000
+#define RESET_SECONDS 3000000
 #define LONG_PRESS_SECONDS 2000000
 
 #define IS_CLICK(duration) ((duration > 0) && (duration <= LONG_PRESS_SECONDS))

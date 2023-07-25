@@ -14,8 +14,9 @@
 RotationTracker hallSensors(PCINT0, PCINT1, PCINT2);
 PWMInput speed(PCINT3);
 PWMButton btn(PCINT4);
+PWMInput autoPlaySwitch(PCINT5);
 
-LEDOutput leds(2, 3, 4);
+LEDOutput leds(4, 3, 2);
 MotorOutput motor(6);
 
 SpiderModel model(&motor, &leds);
@@ -38,13 +39,17 @@ void setup() {
   PCMSK0 |= (1 << PCINT3);  // pin 11
   // Button
   PCMSK0 |= (1 << PCINT4);  // pin 12
+  // auto play on/off switch
+  PCMSK0 |= (1 << PCINT5);  // pin 13
 
   sei();
 
   // input devices
   hallSensors.attach();
   speed.attach();
+  autoPlaySwitch.attach();
   btn.attach();
+
   // output devices
   leds.attach();
   motor.attach();
@@ -52,6 +57,7 @@ void setup() {
   hallSensors.reset();
   model.reset();
 
+  delay(2000);
   Serial.println("loop start");
 }
 
@@ -72,8 +78,7 @@ void loop() {
     leds.setError();
   }
 
-  model.tick(clickDurationMicros, speedInput, hallSensors.position());
-
+  model.tick(clickDurationMicros, speedInput, hallSensors.position(), autoPlaySwitch.currentSpeed() > 1700);
 }
 
 
@@ -81,5 +86,6 @@ ISR(PCINT0_vect) {
   const unsigned long time = micros();
   speed.onISREvent(time);
   btn.onISREvent(time);
+  autoPlaySwitch.onISREvent(time);
   hallSensors.onISREvent(time);
 }
